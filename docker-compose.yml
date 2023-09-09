@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: huyhoang
+      POSTGRES_PASSWORD: huyhoang
+    ports:
+      - "5433:5432"  # Map PostgreSQL port to the host
+
+  spring-app:
+    image: coffee-shop-app
+    build:
+      context: .
+      dockerfile: Dockerfile  # Use the Dockerfile for your Spring Boot app
+    ports:
+      - "8081:8080"  # Map Spring Boot app port to the host
+    depends_on:
+      - postgres  # Ensure the Spring Boot app starts after PostgreSQL
